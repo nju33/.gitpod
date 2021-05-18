@@ -49,10 +49,10 @@ RUN cd .dotfiles \
   && brew bundle
 
 RUN git submodule update --init
-COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
-COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
-COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/starship "$HOME/.bashrc.d/333-starship"
-COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/code "$HOME/.bashrc.d/333-code"
-COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/zoxide "$HOME/.bashrc.d/333-zoxide"
-COPY --chown=gitpod:gitpod .gitpod/extensions/wdhongtw.gpg-indicator-0.3.4.vsix "$HOME/wdhongtw.gpg-indicator-0.3.4.vsix"
+COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
+COPY --chown=gitpod:gitpod .bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
+COPY --chown=gitpod:gitpod .bashrc.d/starship "$HOME/.bashrc.d/333-starship"
+COPY --chown=gitpod:gitpod .bashrc.d/code "$HOME/.bashrc.d/333-code"
+COPY --chown=gitpod:gitpod .bashrc.d/zoxide "$HOME/.bashrc.d/333-zoxide"
+COPY --chown=gitpod:gitpod extensions/wdhongtw.gpg-indicator-0.3.4.vsix "$HOME/wdhongtw.gpg-indicator-0.3.4.vsix"
 
