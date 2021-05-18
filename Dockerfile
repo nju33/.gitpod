@@ -15,7 +15,7 @@ RUN bvm install
 WORKDIR "$HOME"
 RUN git clone https://github.com/nju33/.dotfiles.git \
   && cd .dotfiles \
-  && ln -s "$(pwd)/.bash_aliases" "$HOME/.bash_aliases" \
+  # && ln -s "$(pwd)/.bash_aliases" "$HOME/.bash_aliases" \
   && ln -s "$(pwd)/.agignore" "$HOME/.agignore" \
   && ln -s "$(pwd)/.tmux.conf" "$HOME/.tmux.conf" \
   && ln -s "$(pwd)/init.el" "$HOME/init.el" \
@@ -48,6 +48,7 @@ RUN cd .dotfiles \
   && brew cleanup \
   && brew bundle
 
+RUN git submodule update --init
 COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
 COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
 COPY --chown=gitpod:gitpod .gitpod/.bashrc.d/starship "$HOME/.bashrc.d/333-starship"

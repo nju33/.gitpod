@@ -2,6 +2,10 @@
 
 set -eux
 
+init_dot_gitpod() {
+  git submodule update
+}
+
 init_gpg() {
   set +ux
   if [ -n "$GPG_SECRET_KEY" ]; then
@@ -28,6 +32,7 @@ init_zoxide() {
   fi
 }
 
+init_dot_gitpod
 init_gpg
 init_git_around_gpg
 init_zoxide
