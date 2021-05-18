@@ -1,0 +1,30 @@
+name: Docker push
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: nju33/gitpod-workspace
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set version
+        run: echo "::set-output name=VALUE::${GITHUB_REF#refs/tags/v}
+        id: version
+
+      - name: Login to Dockerhub
+        run: echo "$DOCKER_TOKEN" docker login --username nju33 --password-stdin
+        env:
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+      - name: Build the Dockerfile
+        run: docker build -t "$IMAGE_NAME" .
+      - run: |
+          docker image tag "$IMAGE_NAME" "$IMAGE_NAME:$VERSION"
+          docker image push "$IMAGE_NAME:$VERSION"
+        env:
+          VERSION: ${{ steps.version.outputs.VALUE }}
+      
