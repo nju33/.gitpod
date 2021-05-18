@@ -48,7 +48,6 @@ RUN cd .dotfiles \
   && brew cleanup \
   && brew bundle
 
-RUN git submodule update --init
 COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
 COPY --chown=gitpod:gitpod .bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
 COPY --chown=gitpod:gitpod .bashrc.d/starship "$HOME/.bashrc.d/333-starship"

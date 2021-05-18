@@ -3,7 +3,7 @@
 set -eux
 
 init_dot_gitpod() {
-  git submodule update
+  git submodule update --remote .gitpod
 }
 
 init_gpg() {
