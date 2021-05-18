@@ -1,0 +1,5 @@
+init_code() {
+  if [ -z "$(code --list-extensions | grep 'wdhongtw.gpg-indicator')" ]; then
+    code --install-extension "$HOME/wdhongtw.gpg-indicator-0.3.4.vsix"
+  fi
+}

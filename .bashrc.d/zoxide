@@ -1,0 +1,15 @@
+eval "$(zoxide init bash)"
+
+zoxide add "$GITPOD_REPO_ROOT"
+
+export_zoxide_db() {
+    if [ ! -d "$GITPOD_REPO_ROOT/.gitpod/zoxide" ]; then
+        mkdir -p "$GITPOD_REPO_ROOT/.gitpod/zoxide"
+    fi
+
+    cp "$HOME/.local/share/zoxide/db.zo" "$GITPOD_REPO_ROOT/.gitpod/zoxide/"
+
+    git add "$GITPOD_REPO_ROOT/.gitpod/zoxide/db.zo"
+    git commit -m 'chore: update zoxide db.zo'
+    git push
+}
