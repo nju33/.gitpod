@@ -1,6 +1,7 @@
 FROM gitpod/workspace-full
 
-ENV SSH_GITHUB_PASSPHRASE ''
+ARG ssh_github_passphrase
+ENV SSH_GITHUB_PASSPHRASE "$ssh_github_passphrase"
 
 # Install custom tools, runtime, etc.
 RUN sudo apt-get update \

@@ -32,7 +32,7 @@ jobs:
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
       - name: Build the Dockerfile
-        run: docker build -t "$IMAGE_NAME" --env SSH_GITHUB_PASSPHRASE="$PASSPHRASE" .
+        run: docker build -t "$IMAGE_NAME" --build-arg ssh_github_passphrase="$PASSPHRASE" .
         env:
           PASSPHRASE: ${{ secrets.SSH_GITHUB_PASSPHRASE }}
       - run: |
