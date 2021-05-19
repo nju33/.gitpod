@@ -1,5 +1,7 @@
 FROM gitpod/workspace-full
 
+ENV SSH_GITHUB_PASSPHRASE ''
+
 # Install custom tools, runtime, etc.
 RUN sudo apt-get update \
   && sudo apt-get install -y chromium-browser libgtk-3-dev libnss3-dev expect tmux emacs \
@@ -55,3 +57,9 @@ COPY --chown=gitpod:gitpod .bashrc.d/code "$HOME/.bashrc.d/333-code"
 COPY --chown=gitpod:gitpod .bashrc.d/zoxide "$HOME/.bashrc.d/333-zoxide"
 COPY --chown=gitpod:gitpod extensions/wdhongtw.gpg-indicator-0.3.4.vsix "$HOME/wdhongtw.gpg-indicator-0.3.4.vsix"
 
+COPY --chown=gitpod:gitpod .ssh/config "$HOME/.ssh/config"
+
+RUN gpg --quiet --batch --yes --decrypt --passphrase="$SSH_GITHUB_PASSPHRASE" --output github github.gpg
+COPY --chown=gitpod:gitpod .ssh/github "$HOME/.ssh/github"
+RUN git submodule update -i \
+  && rm "$HOME/.ssh/github"
