@@ -14,6 +14,15 @@ jobs:
       IMAGE_NAME: nju33/gitpod-workspace
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/setup-buildx-action@v1
+      - uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+
       - name: Set version
         run: echo "::set-output name=VALUE::${GITHUB_REF#refs/tags/v}"
         id: version
