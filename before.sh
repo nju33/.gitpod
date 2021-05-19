@@ -3,7 +3,12 @@
 set -eux
 
 init_dot_gitpod() {
-  git submodule update --remote .gitpod
+  set +ux
+  if [ -n "$SSH_GITHUB_PASSPHRASE" ]; then
+    gpg --quiet --batch --yes --decrypt --passphrase="$SSH_GITHUB_PASSPHRASE" --output "$HOME/.ssh/github" .gitpod/.ssh/github.gpg
+  set -ux
+
+  git submodule update --remote
 }
 
 init_gpg() {

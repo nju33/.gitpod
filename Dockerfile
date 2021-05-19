@@ -59,8 +59,7 @@ COPY --chown=gitpod:gitpod .bashrc.d/zoxide "$HOME/.bashrc.d/333-zoxide"
 COPY --chown=gitpod:gitpod extensions/wdhongtw.gpg-indicator-0.3.4.vsix "$HOME/wdhongtw.gpg-indicator-0.3.4.vsix"
 
 COPY --chown=gitpod:gitpod .ssh/config "$HOME/.ssh/config"
-
-RUN gpg --quiet --batch --yes --decrypt --passphrase="$SSH_GITHUB_PASSPHRASE" --output github github.gpg
-COPY --chown=gitpod:gitpod .ssh/github "$HOME/.ssh/github"
+COPY --chown=gitpod:gitpod .ssh/github.gpg "$HOME/.ssh/github.gpg"
+RUN gpg --quiet --batch --yes --decrypt --passphrase="$SSH_GITHUB_PASSPHRASE" --output "$HOME/.ssh/github" "$HOME/.ssh/github.gpg"
 RUN git submodule update -i \
   && rm "$HOME/.ssh/github"
