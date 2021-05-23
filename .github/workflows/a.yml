@@ -4,6 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      PERSONAL_GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
       IMAGE_VERSION: 0.0.1-11
     steps:
       - uses: actions/checkout@v2
@@ -18,9 +19,12 @@ jobs:
       #       echo '::set-output name=VALUE::false'
       #     fi
       - run: |
-          git config --local user.name github-actions[bot]
-          git config --local user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git remote add workspace "https://nju33:${PERSONAL_GITHUB_TOKEN}@github.com/nju33/gitpod-workspace.git"
+          git config --local user.name "nju33"
+          git config --local user.email "nju33.ki@gmail.com"
+          git remote -v
 
           git add .gitpod.Dockerfile
           git commit -m "chore(github-actions): bump version to $IMAGE_VERSION"
-          git push origin main
+          git push workspace main
+          
