@@ -31,7 +31,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: "nju33"
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       # - name: Login to Dockerhub
       #   run: echo "$DOCKER_TOKEN" | docker login --username nju33 --password-stdin
       #   env:
