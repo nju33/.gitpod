@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: nju33/gitpod-workspace
-          toke : ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
       - run: echo "FROM nju33/gitpod-workspace:$IMAGE_VERSION" > .gitpod.Dockerfile
       - run: |
           git config --local user.name "github-actions[bot] "
