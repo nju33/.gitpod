@@ -1,0 +1,17 @@
+name: Push
+
+on:
+  push:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -i -XPOST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer $TOKEN" \
+            https://api.github.com/repos/nju33/gitpod-workspace/dispatches \
+            -d "{\"event_type\":\"updated_gitpod_repo\",\"client_payload\":{}}"
+        env:
+          TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
