@@ -37,6 +37,12 @@ RUN curl -ongrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd
 # Install transfer.sh
 RUN git clone https://github.com/dutchcoders/transfer.sh.git ~/oss/transfer.sh
 
+# Install deno
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+RUN /home/gitpod/.deno/bin/deno completions bash > /home/gitpod/.bashrc.d/90-deno && \
+    echo 'export DENO_INSTALL="/home/gitpod/.deno"' >> /home/gitpod/.bashrc.d/90-deno && \
+    echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> /home/gitpod/.bashrc.d/90-deno
+
 # RUN brew doctor
 # Install custom tools, runtime, etc.
 RUN df -h
