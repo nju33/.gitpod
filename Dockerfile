@@ -20,11 +20,11 @@ RUN git clone https://github.com/nju33/.dotfiles.git \
   && ln -s "$(pwd)/.tmux.conf" "$HOME/.tmux.conf" \
   && ln -s "$(pwd)/init.el" "$HOME/init.el" \
   && mkdir -p "$HOME/.config" && ln -s "$(pwd)/.config_starship.toml" "$HOME/.config/starship.toml"
-  
+
 RUN curl -ongrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip \
   && sudo unzip ngrok.zip -d /usr/local/bin \
   && rm ngrok.zip
-  
+
 # Install azure-cli
 # RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
@@ -40,8 +40,8 @@ RUN git clone https://github.com/dutchcoders/transfer.sh.git ~/oss/transfer.sh
 # Install deno
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 RUN /home/gitpod/.deno/bin/deno completions bash > /home/gitpod/.bashrc.d/90-deno && \
-    echo 'export DENO_INSTALL="/home/gitpod/.deno"' >> /home/gitpod/.bashrc.d/90-deno && \
-    echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> /home/gitpod/.bashrc.d/90-deno
+  echo 'export DENO_INSTALL="/home/gitpod/.deno"' >> /home/gitpod/.bashrc.d/90-deno && \
+  echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> /home/gitpod/.bashrc.d/90-deno
 
 # RUN brew doctor
 # Install custom tools, runtime, etc.
@@ -54,6 +54,8 @@ RUN cd .dotfiles \
   && brew cleanup \
   && brew bundle
 
+COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-linuxbrew"
+COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-pyenv"
 COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
 COPY --chown=gitpod:gitpod .bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
 COPY --chown=gitpod:gitpod .bashrc.d/starship "$HOME/.bashrc.d/333-starship"

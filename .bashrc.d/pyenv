@@ -1,0 +1,3 @@
+if [ -d /home/gitpod/.pyenv/bin ]; then
+  export PATH="$PATH:/home/gitpod/.pyenv/bin"
+fi
