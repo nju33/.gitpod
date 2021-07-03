@@ -62,10 +62,10 @@ jobs:
     steps:
       - run: |
           curl -i -XPOST \
-            -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: Bearer $TOKEN" \
-            https://api.github.com/repos/nju33/gitpod-workspace/dispatches \
+            "$REPOSITORY_DISPATCH_DELEGATION" \
             -d "{\"event_type\":\"updated_docker_image\",\"client_payload\":{\"image\":\"$VERSION\"}}"
         env:
+          REPOSITORY_DISPATCH_DELEGATION: ${{ secrets.REPOSITORY_DISPATCH_DELEGATION }}
           TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
           VERSION: ${{ needs.build.outputs.VERSION }}
