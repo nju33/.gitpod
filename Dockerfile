@@ -54,8 +54,8 @@ RUN cd .dotfiles \
   && brew cleanup \
   && brew bundle
 
-COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-linuxbrew"
-COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-pyenv"
+COPY --chown=gitpod:gitpod .bashrc.d/linuxbrew "$HOME/.bashrc.d/333-linuxbrew"
+COPY --chown=gitpod:gitpod .bashrc.d/pyenv "$HOME/.bashrc.d/333-pyenv"
 COPY --chown=gitpod:gitpod .bashrc.d/gpg "$HOME/.bashrc.d/333-gpg"
 COPY --chown=gitpod:gitpod .bashrc.d/thefuck "$HOME/.bashrc.d/333-thefuck"
 COPY --chown=gitpod:gitpod .bashrc.d/starship "$HOME/.bashrc.d/333-starship"
