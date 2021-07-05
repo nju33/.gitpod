@@ -1,6 +1,6 @@
 repo_root="$(cd /workspace | ls | xargs)"
 
-export _ZO_DATA_DIR="$repo_root/.local/share"
+export _ZO_DATA_DIR="/workspace/$repo_root/.local/share"
 if [ ! -d "$_ZO_DATA_DIR" ]; then
     mkdir -p "$_ZO_DATA_DIR"
 fi
@@ -9,7 +9,7 @@ eval "$(zoxide init bash)"
 
 # The GITPOD_REPO_ROOT do not used because it is empty on VSCode's ssh remote environment
 # zoxide add "$GITPOD_REPO_ROOT"
-zoxide add "$repo_root"
+zoxide add "/workspace/$repo_root"
 
 # export_zoxide_db() {
 #     if [ ! -d "$GITPOD_REPO_ROOT/.gitpod/zoxide" ]; then
