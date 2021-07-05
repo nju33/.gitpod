@@ -1,15 +1,24 @@
+repo_root="$(cd /workspace | ls | xargs)"
+
+export _ZO_DATA_DIR="$repo_root/.local/share"
+if [ ! -d "$_ZO_DATA_DIR" ]; then
+    mkdir -p "$_ZO_DATA_DIR"
+fi
+
 eval "$(zoxide init bash)"
 
-zoxide add "$GITPOD_REPO_ROOT"
+# The GITPOD_REPO_ROOT do not used because it is empty on VSCode's ssh remote environment
+# zoxide add "$GITPOD_REPO_ROOT"
+zoxide add "$repo_root"
 
-export_zoxide_db() {
-    if [ ! -d "$GITPOD_REPO_ROOT/.gitpod/zoxide" ]; then
-        mkdir -p "$GITPOD_REPO_ROOT/.gitpod/zoxide"
-    fi
+# export_zoxide_db() {
+#     if [ ! -d "$GITPOD_REPO_ROOT/.gitpod/zoxide" ]; then
+#         mkdir -p "$GITPOD_REPO_ROOT/.gitpod/zoxide"
+#     fi
 
-    cp "$HOME/.local/share/zoxide/db.zo" "$GITPOD_REPO_ROOT/.gitpod/zoxide/"
+#     cp "$HOME/.local/share/zoxide/db.zo" "$GITPOD_REPO_ROOT/.gitpod/zoxide/"
 
-    git add "$GITPOD_REPO_ROOT/.gitpod/zoxide/db.zo"
-    git commit -m 'chore: update zoxide db.zo'
-    git push
-}
+#     git add "$GITPOD_REPO_ROOT/.gitpod/zoxide/db.zo"
+#     git commit -m 'chore: update zoxide db.zo'
+#     git push
+# }
