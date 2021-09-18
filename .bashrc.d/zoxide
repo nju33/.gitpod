@@ -1,6 +1,4 @@
-repo_root="$(cd /workspace | ls | xargs)"
-
-export _ZO_DATA_DIR="/workspace/$repo_root/.local/share"
+export _ZO_DATA_DIR="/workspace/$GITPOD_REPO_ROOT/.local/share"
 if [ ! -d "$_ZO_DATA_DIR" ]; then
     mkdir -p "$_ZO_DATA_DIR"
 fi
