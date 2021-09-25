@@ -2,7 +2,7 @@ FROM gitpod/workspace-full
 
 # Install custom tools, runtime, etc.
 RUN sudo apt-get update \
-  && sudo apt-get install -y chromium-browser libgtk-3-dev libnss3-dev expect tmux emacs \
+  && sudo apt-get install -y chromium-browser libgtk-3-dev libnss3-dev expect tmux emacs rsync \
   && sudo rm -rf /var/lib/apt/lists/*
 
 # Apply user-specific settings
