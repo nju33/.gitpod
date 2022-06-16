@@ -88,8 +88,3 @@ init_bit
 init_rclone
 
 set +x
-
-echo ''
-echo '💡 Please execute following like'
-echo '  init_code'
-echo ''
