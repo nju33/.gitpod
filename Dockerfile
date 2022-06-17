@@ -108,9 +108,9 @@ RUN asdf plugin-add gcloud https://github.com/jthegedus/asdf-gcloud \
 # 3. `createdb -U postgres default` (the default is a database name)
 # 4. `psql -U postgres -d default`
 # n. To stop by `pg_ctl stop`
-# RUN asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres \
-#   && asdf install postgres latest \
-#   && asdf global postgres latest
+RUN asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres \
+  && asdf install postgres latest \
+  && asdf global postgres latest
 
 # Apply user-specific settings
 ENV NODE_OPTIONS=--max_old_space_size=4096
