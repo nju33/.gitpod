@@ -1,0 +1,3 @@
+if [ -d "$(asdf where nodejs)/.npm/bin" ]; then
+  export PATH="$(asdf where nodejs)/.npm/bin:$PATH"
+fi

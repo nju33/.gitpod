@@ -39,6 +39,7 @@ RUN sed -i -e "/carlocab\/personal\|tophat\/bar\|azure-cli\|git-lfs\|imagemagick
 
 COPY --chown=gitpod:gitpod ".bashrc.d/asdf" "$GITPOD_HOME/.bashrc.d/333-asdf"
 COPY --chown=gitpod:gitpod ".bashrc.d/linuxbrew" "$GITPOD_HOME/.bashrc.d/333-linuxbrew"
+COPY --chown=gitpod:gitpod ".bashrc.d/npm" "$GITPOD_HOME/.bashrc.d/333-npm"
 COPY --chown=gitpod:gitpod ".bashrc.d/home-bin" "$GITPOD_HOME/.bashrc.d/333-home-bin"
 COPY --chown=gitpod:gitpod ".bashrc.d/pyenv" "$GITPOD_HOME/.bashrc.d/333-pyenv"
 COPY --chown=gitpod:gitpod ".bashrc.d/gpg" "$GITPOD_HOME/.bashrc.d/333-gpg"
@@ -93,6 +94,11 @@ RUN asdf plugin-add gcloud https://github.com/jthegedus/asdf-gcloud \
   && asdf install gcloud latest \
   && asdf global gcloud latest
 
+# TODO: Fix `No space left on device`
+# They may be a good solution
+# 1. Do this in the .gitpod.Dockerfile
+# 2. Do this in the before.sh of Gitpod's task
+#
 # Install postgres
 #
 # Usage
@@ -102,9 +108,9 @@ RUN asdf plugin-add gcloud https://github.com/jthegedus/asdf-gcloud \
 # 3. `createdb -U postgres default` (the default is a database name)
 # 4. `psql -U postgres -d default`
 # n. To stop by `pg_ctl stop`
-RUN asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres \
-  && asdf install postgres latest \
-  && asdf global postgres latest
+# RUN asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres \
+#   && asdf install postgres latest \
+#   && asdf global postgres latest
 
 # Apply user-specific settings
 ENV NODE_OPTIONS=--max_old_space_size=4096
@@ -112,7 +118,6 @@ ENV NODE_OPTIONS=--max_old_space_size=4096
 # hadolint ignore=DL3016
 RUN \
   . "$(brew --prefix asdf)/libexec/asdf.sh" \
-  && which npm \
   && npm install --location=global \
     `# https://github.com/google/clasp#readme` \
     @google/clasp \
@@ -127,11 +132,11 @@ RUN \
     vercel \
   && npm cache clean --force \
   `# Cache pages into $HOME/.tldr/` \
-  && tldr --update
+  && PATH="$(asdf where nodejs)/.npm/bin:$PATH" tldr --update
 
 # Install bit and set setting
-RUN bvm install
-RUN "$HOME/bin/bit" config set user.name "純" \
+RUN PATH="$(asdf where nodejs)/.npm/bin:$PATH" bvm install \
+  && "$HOME/bin/bit" config set user.name "純" \
   && "$HOME/bin/bit" config set user.email "nju33.ki@gmail.com" \
   && "$HOME/bin/bit" config set analytics_reporting false \
   && "$HOME/bin/bit" config set anonymous_reporting false
