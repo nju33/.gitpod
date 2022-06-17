@@ -44,24 +44,30 @@ init_navi() {
   fi
 }
 
+# init_bit() {
+#   set +u
+#   tempfile="$(mktemp)"
+
+#   trap "rm -f ""$tempfile""" ERR
+#   set +x
+
+#   if [ -n "$BIT_SSH_SECRET_KEY" ]; then
+#     eval "$(ssh-agent -s)"
+
+#     echo "$BIT_SSH_SECRET_KEY" | base64 --decode >"$tempfile"
+#     chmod 400 "$tempfile"
+#     set -x
+#     ssh-add "$tempfile"
+#     rm -f "$tempfile"
+#   fi
+
+#   set -ux
+# }
+# ^ TODO: Delete the `BIT_SSH_SECRET_KEY` variable
 init_bit() {
-  set +u
-  tempfile="$(mktemp)"
-
-  trap "rm -f ""$tempfile""" ERR
-  set +x
-
-  if [ -n "$BIT_SSH_SECRET_KEY" ]; then
-    eval "$(ssh-agent -s)"
-
-    echo "$BIT_SSH_SECRET_KEY" | base64 --decode >"$tempfile"
-    chmod 400 "$tempfile"
-    set -x
-    ssh-add "$tempfile"
-    rm -f "$tempfile"
+  if command -v bit &>/dev/null &&  [ -n "$BIT_TOKEN" ]; then
+    bit config set user.token "$BIT_TOKEN"
   fi
-
-  set -ux
 }
 
 init_rclone() {
@@ -88,8 +94,3 @@ init_bit
 init_rclone
 
 set +x
-
-echo ''
-echo '💡 Please execute following like'
-echo '  init_code'
-echo ''
