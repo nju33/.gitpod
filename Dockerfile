@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install custom tools, runtime, etc.
 # hadolint ignore=DL3008
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect tmux emacs rsync \
+  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Ngrok
