@@ -7,6 +7,9 @@ WORKDIR /tmp
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install custom tools, runtime, etc.
+# Memos
+# - Google Chrome depend on fonts-liberation and xdg-utils
+# - Remotion depends on ffmpeg
 # hadolint ignore=DL3008
 RUN apt-get update \
   && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync ffmpeg fonts-liberation xdg-utils \
@@ -38,10 +41,10 @@ RUN git clone https://github.com/nju33/.dotfiles.git \
 # Install fonts
 RUN curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%20JP \
   && declare dest=/home/gitpod/.local/share/fonts/notosansjp \
-  && mkdir "$dest" \
+  && mkdir -p "$dest" \
   && unzip -d "$dest" notosansjp.zip \
   && unset dest \
-  && notosansjp.zip \
+  && rm notosansjp.zip \
   && fc-cache -f
 
 # Install custom tools, runtime, etc.
