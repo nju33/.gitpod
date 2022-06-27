@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install custom tools, runtime, etc.
 # hadolint ignore=DL3008
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync fonts-liberation xdg-utils \
+  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync ffmpeg fonts-liberation xdg-utils \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Google Chrome
