@@ -2,14 +2,19 @@
 FROM gitpod/workspace-full
 
 USER root
+WORKDIR /tmp
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install custom tools, runtime, etc.
 # hadolint ignore=DL3008
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync \
+  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync fonts-liberation xdg-utils \
   && rm -rf /var/lib/apt/lists/*
+
+# Install Google Chrome
+RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+  && dpkg -i google-chrome-stable_current_amd64.deb
 
 # Install Ngrok
 RUN curl -ongrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip \
@@ -21,6 +26,7 @@ RUN curl -ongrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd
 
 USER gitpod
 ENV GITPOD_HOME "$HOME"
+WORKDIR "$HOME"
 
 RUN git clone https://github.com/nju33/.dotfiles.git \
   && ln -s "$GITPOD_HOME/.dotfiles/.agignore" "$GITPOD_HOME/.agignore" \
@@ -28,6 +34,15 @@ RUN git clone https://github.com/nju33/.dotfiles.git \
   && ln -s "$GITPOD_HOME/.dotfiles/init.el" "$GITPOD_HOME/init.el" \
   && mkdir -p "$GITPOD_HOME/.config" \
   && ln -s "$GITPOD_HOME/.dotfiles/.config_starship.toml" "$GITPOD_HOME/.config/starship.toml"
+
+# Install fonts
+RUN curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%20JP \
+  && declare dest=/home/gitpod/.local/share/fonts/notosansjp \
+  && mkdir "$dest" \
+  && unzip -d "$dest" notosansjp.zip \
+  && unset dest \
+  && notosansjp.zip \
+  && fc-cache -f
 
 # Install custom tools, runtime, etc.
 RUN sed -i -e "/carlocab\/personal\|tophat\/bar\|azure-cli\|git-lfs\|imagemagick\|python\|ruby\|webp\|tmux\|jq\|tree\|vim\|gnupg\|nginx\|the_silver_searcher\|peco\|monolith\|ngrok\|unrar\|duf\|sed\|emacs\|yvm\|pinentry/d" .dotfiles/Brewfile \
