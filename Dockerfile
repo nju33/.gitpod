@@ -44,8 +44,13 @@ RUN curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%
   && declare dest=/home/gitpod/.local/share/fonts/notosansjp \
   && mkdir -p "$dest" \
   && unzip -d "$dest" notosansjp.zip \
-  && unset dest \
   && rm notosansjp.zip \
+  && curl -o azuki_font.zip http://azukifont.com/font/azukifont121.zip \
+  && declare dest=/home/gitpod/.local/share/fonts/azuki_font \
+  && mkdir -p "$dest" \
+  && unzip -d "$dest" azuki_font.zip \
+  && rm azuki_font.zip \
+  && unset dest \
   && fc-cache -f
 
 # Install custom tools, runtime, etc.
