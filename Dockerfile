@@ -41,12 +41,12 @@ RUN git clone https://github.com/nju33/.dotfiles.git \
 
 # Install fonts
 RUN curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%20JP \
-  && declare dest=/home/gitpod/.local/share/fonts/notosansjp \
+  && declare dest="$HOME/.local/share/fonts/notosansjp" \
   && mkdir -p "$dest" \
   && unzip -d "$dest" notosansjp.zip \
   && rm notosansjp.zip \
   && curl -o azuki_font.zip http://azukifont.com/font/azukifont121.zip \
-  && declare dest=/home/gitpod/.local/share/fonts/azuki_font \
+  && declare dest="$HOME/.local/share/fonts/azuki_font" \
   && mkdir -p "$dest" \
   && unzip -d "$dest" azuki_font.zip \
   && rm azuki_font.zip \
