@@ -7,21 +7,22 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Create a directory to upload itself as artifacts
-              run: mkdir fonts
+              run: mkdir fonts/
             - run: |
                   curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%20JP \
-                    && declare dest="$HOME/fonts/notosansjp" \
+                    && declare dest="fonts/notosansjp" \
                     && mkdir -p "$dest" \
                     && unzip -d "$dest" notosansjp.zip \
                     && rm notosansjp.zip \
                     && curl -o azuki_font.zip http://azukifont.com/font/azukifont121.zip \
-                    && declare dest="$HOME/fonts/azuki_font" \
+                    && declare dest="fonts/azuki_font" \
                     && mkdir -p "$dest" \
                     && unzip -d "$dest" azuki_font.zip \
                     && rm azuki_font.zip \
-                    && unset dest \
-                    && fc-cache -f
+                    && unset dest
             - uses: actions/upload-artifact@v3
               with:
                   name: fonts
                   path: fonts/
+                  retention-days: 1
+                  if-no-files-found: error
