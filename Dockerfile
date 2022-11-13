@@ -57,6 +57,9 @@ RUN curl -o notosansjp.zip https://fonts.google.com/download?family=Noto%20Sans%
 RUN sed -i -e "/carlocab\/personal\|tophat\/bar\|azure-cli\|git-lfs\|imagemagick\|python\|ruby\|webp\|tmux\|jq\|tree\|vim\|gnupg\|nginx\|the_silver_searcher\|peco\|monolith\|ngrok\|unrar\|duf\|sed\|emacs\|yvm\|pinentry/d" .dotfiles/Brewfile \
   && brew update \
   && brew outdated \
+  && `# Due to an "Error: /home/linuxbrew/.linuxbrew/Cellar/cmake/3.24.2 is not a directory"` \
+  && `# Delete at the right time` \
+  && brew install cmake \
   && brew upgrade \
   && brew cleanup \
   && brew bundle --file .dotfiles/Brewfile
