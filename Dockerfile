@@ -8,11 +8,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install custom tools, runtime, etc.
 # Memos
-# - Google Chrome depend on fonts-liberation and xdg-utils
+# - Google Chrome depend on fonts-liberation, xdg-utils and libu2f-udev(2023-02)
 # - Remotion depends on ffmpeg
 # hadolint ignore=DL3008
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync ffmpeg fonts-liberation xdg-utils \
+  && apt-get install -y --no-install-recommends chromium-browser libgtk-3-dev libnss3-dev expect fuse tmux emacs rsync ffmpeg fonts-liberation xdg-utils libu2f-udev \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Google Chrome
@@ -157,12 +157,13 @@ RUN \
     pageres-cli \
     tldr \
     vercel \
-  && npm cache clean --force \
   `# Cache pages into $HOME/.tldr/` \
-  && PATH="$(asdf where nodejs)/.npm/bin:$PATH" tldr --update
+  && PATH="$(asdf where nodejs)/bin:$PATH" \
+  && tldr --update
+  # && npm cache clean --force
 
 # Install bit and set setting
-RUN PATH="$(asdf where nodejs)/.npm/bin:$PATH" bvm install \
+RUN PATH="$(asdf where nodejs)/bin:$PATH" bvm install \
   && "$HOME/bin/bit" config set user.name "純" \
   && "$HOME/bin/bit" config set user.email "nju33.ki@gmail.com" \
   && "$HOME/bin/bit" config set analytics_reporting false \
